@@ -1,11 +1,11 @@
 <html>
 <!-- This is managed by PUPPET -->
 <head>
-	<title>DSI Repo</title>
+	<title><%= reponame %> Repo</title>
 </head>
 <body>
 
-<h1>Welcome to the DSI repo</h1>
+<h1>Welcome to the <%= reponame %> repo</h1>
 
 <p>Make sure <%= fqdn %> resolves to <%= ipaddress_eth1 %> for you:</p>
 <code>ping <%= fqdn %></code>
