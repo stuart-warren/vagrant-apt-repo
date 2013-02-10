@@ -1,0 +1,10 @@
+Origin: <%= reponame %>
+Label: <%= reponame %>
+Codename: precise
+Version: 12.04
+Architectures: i386 amd64
+Components: <%= customcomponent %> main
+Description: <%= repodesc %>
+#DebOverride: override.precise
+#DscOverride: override.precise
+SignWith: <%= gpgid %>

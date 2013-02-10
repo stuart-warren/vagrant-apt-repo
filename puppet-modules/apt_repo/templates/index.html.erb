@@ -1,0 +1,26 @@
+<html>
+<!-- This is managed by PUPPET -->
+<head>
+	<title>DSI Repo</title>
+</head>
+<body>
+
+<h1>Welcome to the DSI repo</h1>
+
+<p>Make sure <%= fqdn %> resolves to <%= ipaddress_eth1 %> for you:</p>
+<code>ping <%= fqdn %></code>
+<p>Add the following to <%= sourceslist %>:</p>
+<code>deb http://<%= fqdn %>/ubuntu/ precise <%= customcomponent %></code><br />
+<!-- <code>deb http://<%= ipaddress_eth1 %>/ubuntu/ precise <%= customcomponent %></code> -->
+<p>Install the key:</p>
+<code>wget <a href="http://<%= fqdn %>/ubuntu/repo.gpg.key">http://<%= fqdn %>/ubuntu/repo.gpg.key</a> -O - | sudo apt-key add -</code><br />
+<!-- <code>wget http://<%= ipaddress_eth1 %>/ubuntu/repo.gpg.key -O - | sudo apt-key add -</code> -->
+<p>Update your list of packages:</p>
+<code>sudo apt-get update</code>
+<p>Install your stuff!</p>
+
+<h3>This is NOT a production repository, packages here <em>might</em> break your machine...</h3>
+
+
+</body>
+</html>
