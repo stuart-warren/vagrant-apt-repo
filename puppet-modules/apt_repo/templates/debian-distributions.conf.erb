@@ -1,0 +1,21 @@
+Origin: <%= reponame %>
+Label: <%= reponame %>
+Codename: squeeze
+Version: 6.0
+Architectures: i386 amd64 source
+Components: <%= customcomponent %> main
+Description: <%= repodesc %>
+#DebOverride: override.squeeze
+#DscOverride: override.squeeze
+SignWith: <%= gpgid %>
+
+Origin: <%= reponame %> 
+Label: <%= reponame %>
+Codename: squeeze-backports
+Version: 6.0
+Architectures: i386 amd64 source
+Components: <%= customcomponent %> main
+Description: <%= repodesc %>
+#DebOverride: override.squeeze
+#DscOverride: override.squeeze
+SignWith: <%= gpgid %>

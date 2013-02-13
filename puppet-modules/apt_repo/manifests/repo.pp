@@ -23,9 +23,9 @@ class apt_repo::repo(
                   'vim',
                   'apache2',
                   'dpkg-sig',]
-    
+
     # Install list of packages above
-    package { $packages: 
+    package { $packages:
         ensure   => installed,
         require  => [Exec['apt-get update']],
     }
@@ -34,7 +34,7 @@ class apt_repo::repo(
       ensure     => running,
       hasstatus  => true,
       hasrestart => true,
-      require    => Package["apache2"],
+      require    => Package['apache2'],
     }
 
     file { '/root/ubuntu.gpg.key':
@@ -60,10 +60,10 @@ class apt_repo::repo(
         require => File['/root/ubuntu.sec.gpg.key'],
     }
 
-    $repodirectories = ['/var/www/repos', 
-                        '/var/www/repos/apt', 
+    $repodirectories = ['/var/www/repos',
+                        '/var/www/repos/apt',
                         '/var/www/repos/apt/ubuntu',
-    #                   '/var/www/repos/apt/debian'
+                        '/var/www/repos/apt/debian'
                         ]
 
     file { $repodirectories:
@@ -74,10 +74,16 @@ class apt_repo::repo(
                     Exec['import secpgp key']],
     }
 
-    file { 'base repo':
+    file { 'base repo ubuntu':
         ensure  => directory,
         path    => ['/var/www/repos/apt/ubuntu/conf'],
         require => File['/var/www/repos/apt/ubuntu'],
+    }
+
+    file { 'base repo debian':
+        ensure  => directory,
+        path    => ['/var/www/repos/apt/debian/conf'],
+        require => File['/var/www/repos/apt/debian'],
     }
 
     file { '/etc/apache2/conf.d/repos':
@@ -97,25 +103,37 @@ class apt_repo::repo(
     file { '/var/www/repos/apt/ubuntu/conf/distributions':
         ensure  => present,
         content => template('apt_repo/ubuntu-distributions.conf.erb'),
-        require => File['base repo'],
+        require => File['base repo ubuntu'],
     }
 
     file { '/var/www/repos/apt/ubuntu/conf/options':
         ensure  => present,
         source  => 'puppet:///modules/apt_repo/ubuntu-options.conf',
-        require => File['base repo'],
+        require => File['base repo ubuntu'],
+    }
+
+    file { '/var/www/repos/apt/debian/conf/distributions':
+        ensure  => present,
+        content => template('apt_repo/debian-distributions.conf.erb'),
+        require => File['base repo debian'],
+    }
+
+    file { '/var/www/repos/apt/debian/conf/options':
+        ensure  => present,
+        source  => 'puppet:///modules/apt_repo/debian-options.conf',
+        require => File['base repo debian'],
     }
 
     file { '/var/www/repos/apt/index.html':
         ensure  => present,
         content => template('apt_repo/index.html.erb'),
-        require => File['base repo'],
+        require => File['base repo ubuntu'],
     }
 
     exec { 'export public key':
         command  => "/usr/bin/gpg --armor --output /var/www/repos/apt/ubuntu/repo.gpg.key --export $gpgid",
         creates  => '/var/www/repos/apt/ubuntu/repo.gpg.key',
-        require  => File['base repo'],
+        require  => File['base repo ubuntu'],
     }
 
     file { '/usr/local/sbin/genpackages.sh':

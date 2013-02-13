@@ -9,9 +9,18 @@
 
 <p>Make sure <%= fqdn %> resolves to <%= ipaddress_eth1 %> for you:</p>
 <code>ping <%= fqdn %></code>
+
+<h2>Ubuntu</h2>
 <p>Add the following to <%= sourceslist %>:</p>
 <code>deb http://<%= fqdn %>/ubuntu/ precise <%= customcomponent %></code><br />
 <!-- <code>deb http://<%= ipaddress_eth1 %>/ubuntu/ precise <%= customcomponent %></code> -->
+
+<h2>Debian</h2>
+<p>Add the following to <%= sourceslist %>:</p>
+<code>deb http://<%= fqdn %>/debian/ squeeze-backports <%= customcomponent %></code><br />
+<code>deb-src http://<%= fqdn %>/debian/ squeeze-backports <%= customcomponent %></code><br />
+<!-- <code>deb http://<%= ipaddress_eth1 %>/ubuntu/ precise <%= customcomponent %></code> -->
+
 <p>Install the key:</p>
 <code>wget <a href="http://<%= fqdn %>/ubuntu/repo.gpg.key">http://<%= fqdn %>/ubuntu/repo.gpg.key</a> -O - | sudo apt-key add -</code><br />
 <!-- <code>wget http://<%= ipaddress_eth1 %>/ubuntu/repo.gpg.key -O - | sudo apt-key add -</code> -->

@@ -5,4 +5,10 @@ if [ "$(id -u)" != "0" ]; then
 fi
 cd /var/www/repos/apt/ubuntu
 rm -rf db/ dists/ pool/
-find <%= debpath %> -name "*.deb" -exec reprepro -Vb . includedeb precise '{}' ';'
+find <%= debpath %>/ubuntu -name "*.deb" -exec reprepro -Vb . includedeb precise '{}' ';'
+
+cd /var/www/repos/apt/debian
+rm -rf db/ dists/ pool/
+find <%= debpath %>/debian -name "*.dsc" -exec reprepro -Vb . includedsc squeeze-backports '{}' ';'
+find <%= debpath %>/debian -name "*.changes" -exec reprepro -Vb . include squeeze-backports '{}' ';'
+find <%= debpath %>/debian -name "*.deb" -exec reprepro -Vb . includedeb squeeze-backports '{}' ';'
