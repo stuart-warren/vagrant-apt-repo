@@ -27,7 +27,7 @@ Vagrant::Config.run do |config|
   # network using the host's network device. This makes the VM appear as another
   # physical device on your network.
   config.vm.network :bridged
-  config.vm.host_name = 'apt-repo'
+  config.vm.host_name = 'apt-repo.example.com'
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
